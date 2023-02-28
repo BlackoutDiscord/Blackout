@@ -1,0 +1,22 @@
+{
+	"name": "blackout",
+	"version": "0.0.0",
+	"description": "Modern and functional general-purpose bot for Blackout Discord server",
+	"license": "Unlicense",
+	"contributors": [
+		{
+			"name": "beryll1um",
+			"email": "vitalii.babichuk@proton.me"
+		}
+	],
+	"main": "dist/index.js",
+	"scripts": {
+		"build": "tsc"
+	},
+	"dependencies": {
+		"typescript": "^4.9.5"
+	},
+	"devDependencies": {
+		"@types/node": "^18.14.2"
+	}
+}

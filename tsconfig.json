@@ -1,0 +1,11 @@
+{
+	"compilerOptions": {
+		"strict": true,
+		"baseUrl": "src",
+		"module": "commonjs",
+		"rootDir": "src",
+		"outDir": "dist",
+		"removeComments": true,
+		"target": "es2022"
+	}
+}
