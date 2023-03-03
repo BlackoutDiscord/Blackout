@@ -3,6 +3,10 @@
 		"strict": true,
 		"baseUrl": "src",
 		"module": "commonjs",
+		"paths": {
+			"@dispatchers/*": [ "dispatchers/*" ],
+			"@interfaces/*": [ "interfaces/*" ]
+		},
 		"rootDir": "src",
 		"outDir": "dist",
 		"removeComments": true,
