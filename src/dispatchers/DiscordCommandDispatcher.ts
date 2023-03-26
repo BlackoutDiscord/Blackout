@@ -10,13 +10,15 @@ type DiscordCommand = {
 	execute: (commandInteraction: CommandInteraction) => Promise<void>;
 };
 
+type DiscordCommandName = ChatInputApplicationCommandData["name"];
+
 const COMMAND_DISPATCHER_NOT_FOUND_ERROR = "The dispatcher command is not found.";
 
 class DiscordCommandDispatcher implements DiscordGuildDispatcher {
-	private _commands: Map<string, Readonly<DiscordCommand>>;
+	private _commands: Map<DiscordCommandName, Readonly<DiscordCommand>>;
 	private _guild?: Guild;
 
-	constructor(commands?: readonly [string, DiscordCommand][]) {
+	constructor(commands?: readonly [DiscordCommandName, DiscordCommand][]) {
 		this._commands = new Map(commands);
 	}
 
@@ -30,27 +32,25 @@ class DiscordCommandDispatcher implements DiscordGuildDispatcher {
 		this._guild = undefined;
 	}
 
-	public async set(name: string, command: DiscordCommand): Promise<void> {
+	public async set(name: DiscordCommandName, command: DiscordCommand): Promise<void> {
 		if (this._guild) await this._registerOrEditCommand(name, command.data);
 		this._commands.set(name, command);
 	}
 
-	public async delete(name: string): Promise<void> {
+	public async delete(name: DiscordCommandName): Promise<void> {
 		if (this._guild) await this._unregisterCommand(name);
 		this._commands.delete(name);
 	}
 
 	public execute(commandInteraction: CommandInteraction): void {
 		const command = this._commands.get(commandInteraction.commandName);
-		if (!command) {
-			throw new Error(COMMAND_DISPATCHER_NOT_FOUND_ERROR);
-		}
+		if (!command) throw new Error(COMMAND_DISPATCHER_NOT_FOUND_ERROR);
 		command.execute(commandInteraction);
 	}
 
 	private async _registerCommands(): Promise<void> {
 		if (!this._guild) throw new Error(DISPATCHER_NOT_INITIALIZED_ERROR);
-		const commands = Array.from(this._commands.entries()).map(([name, {data}]) => ({ name, ...data }));
+		const commands = [ ...this._commands.entries() ].map(([name, {data}]) => ({ name, ...data }));
 		await this._guild.commands.set(commands);
 	}
 
@@ -59,7 +59,7 @@ class DiscordCommandDispatcher implements DiscordGuildDispatcher {
 		await this._guild.commands.set([]);
 	}
 
-	private async _registerOrEditCommand(name: string, data: DiscordCommand["data"]): Promise<void> {
+	private async _registerOrEditCommand(name: DiscordCommandName, data: DiscordCommand["data"]): Promise<void> {
 		if (!this._guild) throw new Error(DISPATCHER_NOT_INITIALIZED_ERROR);
 		const fetched = await this._guild.commands.fetch();
 		const command = fetched.find(c => c.name === name);
@@ -70,11 +70,11 @@ class DiscordCommandDispatcher implements DiscordGuildDispatcher {
 		}
 	}
 
-	private async _unregisterCommand(name: string): Promise<void> {
+	private async _unregisterCommand(name: DiscordCommandName): Promise<void> {
 		if (!this._guild) throw new Error(DISPATCHER_NOT_INITIALIZED_ERROR);
 		await this._guild.commands.delete(name);
 	}
 };
 
-export { DiscordCommand, CommandInteraction, DiscordCommandDispatcher };
+export { DiscordCommandName, DiscordCommand, CommandInteraction, DiscordCommandDispatcher };
 
