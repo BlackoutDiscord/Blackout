@@ -5,11 +5,10 @@
 import { Guild } from "discord.js";
 
 interface DiscordGuildDispatcher {
-	attach(guild: Guild): void;
-	detach(): void;
-};
+  attach(guild: Guild): void;
+  detach(): void;
+}
 
 const DISPATCHER_NOT_INITIALIZED_ERROR = "The dispatcher is not initialized.";
 
 export { DiscordGuildDispatcher, Guild, DISPATCHER_NOT_INITIALIZED_ERROR };
-
