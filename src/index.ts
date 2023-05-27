@@ -8,8 +8,8 @@ import {
   DiscordCommandDispatcher,
 } from "@dispatchers/DiscordCommandDispatcher";
 import {
-  DiscordChannelDispatcher,
   DiscordChannelType,
+  DiscordChannelDispatcher,
 } from "@dispatchers/DiscordChannelDispatcher";
 
 const commandDispatcher = new DiscordCommandDispatcher([

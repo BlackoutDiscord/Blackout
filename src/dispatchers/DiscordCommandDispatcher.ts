@@ -12,8 +12,10 @@ import {
   DISPATCHER_NOT_INITIALIZED_ERROR,
 } from "@interfaces/DiscordGuildDispatcher";
 
+type DiscordCommandData = OmitUnion<ChatInputApplicationCommandData, "name">;
+
 type DiscordCommand = {
-  data: OmitUnion<ChatInputApplicationCommandData, "name">;
+  data: DiscordCommandData;
   execute: (commandInteraction: CommandInteraction) => Promise<void>;
 };
 
@@ -54,6 +56,7 @@ class DiscordCommandDispatcher implements DiscordGuildDispatcher {
   }
 
   public execute(commandInteraction: CommandInteraction): void {
+    if (!this._guild) throw new Error(DISPATCHER_NOT_INITIALIZED_ERROR);
     const command = this._commands.get(commandInteraction.commandName);
     if (!command) throw new Error(COMMAND_DISPATCHER_NOT_FOUND_ERROR);
     command.execute(commandInteraction);
@@ -75,7 +78,7 @@ class DiscordCommandDispatcher implements DiscordGuildDispatcher {
 
   private async _registerOrEditCommand(
     name: DiscordCommandName,
-    data: DiscordCommand["data"]
+    data: DiscordCommandData
   ): Promise<void> {
     if (!this._guild) throw new Error(DISPATCHER_NOT_INITIALIZED_ERROR);
     const fetched = await this._guild.commands.fetch();
@@ -94,8 +97,9 @@ class DiscordCommandDispatcher implements DiscordGuildDispatcher {
 }
 
 export {
-  DiscordCommandName,
-  DiscordCommand,
   CommandInteraction,
+  DiscordCommandData,
+  DiscordCommand,
+  DiscordCommandName,
   DiscordCommandDispatcher,
 };

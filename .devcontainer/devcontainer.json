@@ -1,4 +1,4 @@
 {
-	"build": { "dockerfile": "../docker/alpine-develop/Dockerfile" },
-	"postCreateCommand": "scripts/install_node-v18.14.2-linux-x64-musl.sh -ic && npm install"
+  "build": { "dockerfile": "../docker/alpine-develop/Dockerfile" },
+  "postCreateCommand": "scripts/install_node-v18.14.2-linux-x64-musl.sh -ic && npm install"
 }

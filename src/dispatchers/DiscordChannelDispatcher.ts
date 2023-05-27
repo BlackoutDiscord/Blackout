@@ -32,6 +32,8 @@ type DiscordChannel = Readonly<
   }
 >;
 
+type DiscordChannelId = DiscordChannel["id"];
+
 const CHANNEL_DISPATCHER_NOT_FOUND_ERROR =
   "The dispatcher channel is not found.";
 
@@ -72,7 +74,7 @@ class DiscordChannelDispatcher implements DiscordGuildDispatcher {
     return channel;
   }
 
-  public async delete(id: DiscordChannel["id"]): Promise<void> {
+  public async delete(id: DiscordChannelId): Promise<void> {
     if (!this._guild) throw new Error(DISPATCHER_NOT_INITIALIZED_ERROR);
     const channel = this._channels.get(id);
     if (!channel) throw new Error(CHANNEL_DISPATCHER_NOT_FOUND_ERROR);
@@ -110,9 +112,11 @@ class DiscordChannelDispatcher implements DiscordGuildDispatcher {
 }
 
 export {
-  DiscordChannelCreateOptions,
   DiscordChannelType,
+  Guild,
+  DiscordChannelCreateOptions,
   DiscordChannelDispatcherOptions,
   DiscordChannel,
+  DiscordChannelId,
   DiscordChannelDispatcher,
 };

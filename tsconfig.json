@@ -1,15 +1,19 @@
 {
-	"compilerOptions": {
-		"strict": true,
-		"baseUrl": "src",
-		"module": "commonjs",
-		"paths": {
-			"@dispatchers/*": [ "dispatchers/*" ],
-			"@interfaces/*": [ "interfaces/*" ]
-		},
-		"rootDir": "src",
-		"outDir": "dist",
-		"removeComments": true,
-		"target": "es2022"
-	}
+  "compilerOptions": {
+    "strict": true,
+    "baseUrl": "src",
+    "module": "commonjs",
+    "paths": {
+      "@dispatchers/*": [
+        "dispatchers/*"
+      ],
+      "@interfaces/*": [
+        "interfaces/*"
+      ]
+    },
+    "rootDir": "src",
+    "outDir": "dist",
+    "removeComments": true,
+    "target": "es2022"
+  }
 }
