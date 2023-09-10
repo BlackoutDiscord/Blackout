@@ -1,8 +1,8 @@
 #!/bin/sh
 
 # Copyright (c) 2023 beryll1um
-# Distributed under the Unlicense software license, see
-# the accompanying file LICENSE or https://unlicense.org.
+# Distributed under the MIT software license, see the accompanying
+# file LICENSE or http://www.opensource.org/licenses/mit-license.php
 
 PKG_NAME=node
 PKG_VERSION=v18.14.2

@@ -1,23 +1,17 @@
 # Copyright (c) 2023 beryll1um
-# Distributed under the Unlicense software license, see
-# the accompanying file LICENSE or https://unlicense.org.
+# Distributed under the MIT software license, see the accompanying
+# file LICENSE or http://www.opensource.org/licenses/mit-license.php
 
-FROM alpine:3.14
+FROM alpine:3.14.10
 
 ARG USERNAME=blackout
 ARG USER_UID=1000
 ARG USER_GID=$USER_UID
 
-# Default Docker engine does not support isolated namespaces or
-# namespace mapping. To avoid creating new files with root-only access, we
-# create a new user inside the container and assign it the most commonly
-# used UID and GID of the host's home user. This ensures that any files
-# created by the container will be accessible by the host user.
-
-# But, for example, the Podman engine maps the namespace of the launching user
-# to the container user by default, so our new user won't be able to use the
-# mounted directory. Please remove user creation or set "userns" to "keep-id"
-# in container.conf or create an executable proxy for vscode.
+# Adding a new group and user only makes sense if the host user's UID/GID
+# mapping to the container isn't enabled by default or isn't supported by the
+# container engine. This helps not to manage the mounted volume as the root from
+# the container.
 
 RUN addgroup --gid $USER_GID $USERNAME \
 	&& adduser -u $USER_UID -G $USERNAME -D $USERNAME \

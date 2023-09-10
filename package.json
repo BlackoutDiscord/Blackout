@@ -2,7 +2,7 @@
   "name": "blackout",
   "version": "0.0.0",
   "description": "Modern and functional general-purpose bot for Blackout Discord server",
-  "license": "Unlicense",
+  "license": "MIT",
   "contributors": [
     {
       "name": "beryll1um",
